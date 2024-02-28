@@ -20,7 +20,7 @@ Session = sessionmaker(bind=engine)
 logger = new_logger("Top4Grep")
 stemmer = PorterStemmer()
 
-CONFERENCES = ["NDSS", "IEEE S&P", "USENIX", "CCS"]
+CONFERENCES = ["NDSS", "IEEE S&P", "USENIX", "CCS","ICSE","ISSTA"]
 
 # Function to check and download 'punkt' if not already available
 def check_and_download_punkt():

@@ -12,12 +12,14 @@ from .abstract import Abstracts
 logger = new_logger("DB")
 logger.setLevel('WARNING')
 
-CONFERENCES = ["NDSS", "IEEE S&P", "USENIX", "CCS"]
+CONFERENCES = ["NDSS", "IEEE S&P", "USENIX", "CCS","ICSE","ISSTA"]
 NAME_MAP = {
         "NDSS": "ndss",
         "IEEE S&P": "sp",
         "USENIX": "uss",
         "CCS": "ccs",
+        "ICSE": "icse",
+        "ISSTA":"issta",
         }
 
 engine = sqlalchemy.create_engine(f'sqlite:///papers.db')
