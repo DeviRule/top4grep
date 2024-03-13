@@ -29,6 +29,4 @@ Currently, the query is just a case-insensitive match (just like grep). The retu
 ![screenshot](https://raw.githubusercontent.com/Kyle-Kyle/top4grep/master/img/screenshot.png)
 
 ## TODO
-- [ ] grep in abstract
-- [ ] fuzzy match
 - [ ] complex search logic (`OR` operation)
