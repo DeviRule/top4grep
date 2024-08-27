@@ -1,4 +1,3 @@
-from pathlib import Path
 
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
@@ -7,12 +6,11 @@ from nltk.data import find
 from nltk.stem import PorterStemmer
 
 from .db import Base, Paper
-from .build_db import build_db
+from .build_db import build_db, DB_PATH
 from .utils import new_logger
 import argparse
 
-PACKAGE_DIR = Path(__file__).resolve().parent
-DB_PATH = PACKAGE_DIR / "data" / "papers.db"
+
 
 engine = sqlalchemy.create_engine(f'sqlite:///{str(DB_PATH)}')
 Base.metadata.create_all(engine)
@@ -44,6 +42,7 @@ def existed_in_tokens(tokens, keywords):
 
 def grep(keywords, abstract):
     # TODO: currently we only grep either from title or from abstract, also grep from other fields in the future maybe?
+    keywords = [stemmer.stem(x.lower()) for x in keywords]
     if abstract:
         constraints = [Paper.abstract.contains(x) for x in keywords]
         with Session() as session:
@@ -58,7 +57,7 @@ def grep(keywords, abstract):
         #tokenize the title and filter out the substring matches
         filter_paper = []
         for paper in papers:
-            if all([stemmer.stem(x.lower()) in fuzzy_match(paper.title.lower()) for x in keywords]):
+            if all([x in fuzzy_match(paper.title.lower()) for x in keywords]):
                 filter_paper.append(paper)
     # perform customized sorthing
     papers = sorted(filter_paper, key=lambda paper: paper.year + CONFERENCES.index(paper.conference)/10, reverse=True)
